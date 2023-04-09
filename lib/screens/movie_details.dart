@@ -10,7 +10,7 @@ import '../constants.dart';
 import '../controller/movie_details.dart';
 
 import 'package:readmore/readmore.dart';
-import '../start_widget.dart';
+import '../star_widget.dart';
 import '../widget/bottom_info_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 

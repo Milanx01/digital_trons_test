@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
-import 'start_widget.dart';
+import 'star_widget.dart';
 
 class HorizontalMovieCard extends StatelessWidget {
   final String poster;
