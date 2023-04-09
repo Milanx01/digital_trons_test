@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.digital_trons_practical">
+    <uses-permission android:name="android.permission.INTERNET" /> 
+
    <application
         android:label="digital_trons_practical"
         android:name="${applicationName}"
