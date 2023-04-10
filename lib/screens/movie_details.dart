@@ -144,10 +144,8 @@ class _MovieDetailScreenWidgetState extends State<MovieDetailScreenWidget> {
                                                   children: [
                                                     ListTile(
                                                       onTap: () {
-                                                        launchUrl(
-                                                          Uri.parse(
-                                                            "https://www.themoviedb.org/movie/${info.id}",
-                                                          ),
+                                                        _launchUrl(
+                                                          "https://www.themoviedb.org/movie/${info.id}",
                                                         );
                                                       },
                                                       leading: Icon(
@@ -336,6 +334,12 @@ class _MovieDetailScreenWidgetState extends State<MovieDetailScreenWidget> {
               ),
             ),
     );
+  }
+
+  Future<void> _launchUrl(String _url) async {
+    if (!await launchUrl(Uri.parse(_url))) {
+      throw Exception('Could not launch $_url');
+    }
   }
 }
 

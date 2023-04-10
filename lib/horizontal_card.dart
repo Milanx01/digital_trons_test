@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:digital_trons_practical/animation.dart';
+import 'package:digital_trons_practical/screens/movie_details.dart';
 import 'package:flutter/material.dart';
 
 import 'constants.dart';
@@ -30,13 +32,12 @@ class HorizontalMovieCard extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: InkWell(
         onTap: () {
-          // pushNewScreen(
-          //   context,
-          //   MovieDetailsScreen(
-          //     id: id,
-          //     backdrop: backdrop,
-          //   ),
-          // );
+          pushNewScreen(
+            context,
+            MovieDetailScreenWidget(
+              movieId: int.tryParse((id.toString())) ?? 0,
+            ),
+          );
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

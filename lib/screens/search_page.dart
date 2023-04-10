@@ -86,49 +86,62 @@ class _SearchPageState extends State<SearchPage> {
                           ),
                         ),
                       ),
-                      onSubmitted: (query) {
-                        if (query.isNotEmpty) {
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
                           Future.delayed(const Duration(milliseconds: 500), () {
-                            _searchController.searchMovies(query);
+                            _searchController.searchMovies(value);
                           });
                         }
                       },
+                      // onSubmitted: (query) {
+                      //   if (query.isNotEmpty) {
+                      //     Future.delayed(const Duration(milliseconds: 500), () {
+                      //       _searchController.searchMovies(query);
+                      //     });
+                      //   }
+                      // },
                     ),
                   ),
-                  Obx(
-                    () => _searchController.searchResults.isNotEmpty
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: _searchController.searchResults.length,
-                            itemBuilder: (context, i) {
-                              TrendingMovieList data =
-                                  _searchController.searchResults[i];
-                              return HorizontalMovieCard(
-                                poster:
-                                    '$imageBasePath${data.posterPath ?? ''}',
-                                name: data.title ?? '',
-                                backdrop:
-                                    '$imageBasePath${data.backdropPath ?? ''}',
-                                date: data.releaseDate.toString().isNotEmpty
-                                    ? "${monthgenrater(data.releaseDate.toString().split("-")[1])} ${data.releaseDate.toString().split("-")[2]}, ${data.releaseDate.toString().split("-")[0]}"
-                                    : "Not Available",
-                                id: data.id.toString(),
-                                color: Colors.white,
-                                rate: data.voteAverage ?? 0,
-                              );
-                            },
-                          )
-                        : _searchController.isFirstTime.isTrue
-                            ? const Center(
-                                child: Text(
-                                  'No result found.',
-                                  style: TextStyle(
-                                      fontSize: 16, color: Colors.white),
-                                ),
-                              )
-                            : const SizedBox(),
-                  ),
+                  Obx(() {
+                    if (_searchController.isLoading.isTrue) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (_searchController.searchResults.isEmpty &&
+                        _searchController.isFirst.isTrue) {
+                      return const Center(
+                        child: Text(
+                          'No Data Found',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _searchController.searchResults.length,
+                        itemBuilder: (context, i) {
+                          TrendingMovieList data =
+                              _searchController.searchResults[i];
+                          return HorizontalMovieCard(
+                            poster: '$imageBasePath${data.posterPath ?? ''}',
+                            name: data.title ?? '',
+                            backdrop:
+                                '$imageBasePath${data.backdropPath ?? ''}',
+                            date: data.releaseDate.toString().isNotEmpty
+                                ? "${monthgenrater(data.releaseDate.toString().split("-")[1])} ${data.releaseDate.toString().split("-")[2]}, ${data.releaseDate.toString().split("-")[0]}"
+                                : "Not Available",
+                            id: data.id.toString(),
+                            color: Colors.white,
+                            rate: data.voteAverage ?? 0,
+                          );
+                        },
+                      );
+                    }
+                  }),
                 ],
               ),
       ),

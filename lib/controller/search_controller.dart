@@ -8,12 +8,14 @@ class SearchController extends GetxController {
   final AppRepository _appRepository = AppRepository();
   var searchResults = <TrendingMovieList>[].obs;
   var isLoading = false.obs;
-  var isFirstTime = false.obs;
+  var isFirst = false.obs;
 
   Future<void> searchMovies(String query) async {
     try {
-      isFirstTime.value = true;
       isLoading.value = true;
+      isFirst.value = true;
+
+      searchResults.clear();
       final results = await _appRepository.searchMovies(query);
       searchResults.value = results
           .map<TrendingMovieList>((json) => TrendingMovieList.fromJson(json))
