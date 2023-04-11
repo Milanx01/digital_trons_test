@@ -2,6 +2,7 @@ import 'package:digital_trons_practical/controller/search_controller.dart';
 import 'package:digital_trons_practical/model/trending_movie_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../constants.dart';
 import '../horizontal_card.dart';
@@ -131,9 +132,16 @@ class _SearchPageState extends State<SearchPage> {
                             name: data.title ?? '',
                             backdrop:
                                 '$imageBasePath${data.backdropPath ?? ''}',
-                            date: data.releaseDate.toString().isNotEmpty
-                                ? "${monthgenrater(data.releaseDate.toString().split("-")[1])} ${data.releaseDate.toString().split("-")[2]}, ${data.releaseDate.toString().split("-")[0]}"
-                                : "Not Available",
+                            // date: data.releaseDate.toString().isNotEmpty
+                            //     ? "${monthgenrater(data.releaseDate.toString().split("-")[1])} ${data.releaseDate.toString().split("-")[2]}, ${data.releaseDate.toString().split("-")[0]}"
+                            //     : "Not Available",
+                            date: (() {
+                              final DateFormat formatter =
+                                  DateFormat('dd-MMM-yyyy');
+                              final String formatted = formatter
+                                  .format(data.releaseDate ?? DateTime.now());
+                              return formatted;
+                            }()),
                             id: data.id.toString(),
                             color: Colors.white,
                             rate: data.voteAverage ?? 0,

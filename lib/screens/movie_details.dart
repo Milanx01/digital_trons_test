@@ -251,8 +251,8 @@ class _MovieDetailScreenWidgetState extends State<MovieDetailScreenWidget> {
                                           delay:
                                               const Duration(microseconds: 700),
                                           child: Text(
-                                            (info.genres ?? []).join(','),
-                                            style: normalText.copyWith(
+                                            getGenresText(),
+                                            style: const TextStyle(
                                                 color: Colors.white),
                                           ),
                                         ),
@@ -340,6 +340,15 @@ class _MovieDetailScreenWidgetState extends State<MovieDetailScreenWidget> {
     if (!await launchUrl(Uri.parse(_url))) {
       throw Exception('Could not launch $_url');
     }
+  }
+
+  String getGenresText() {
+    List<String> genresName = [];
+
+    for (Genre element in (info.genres ?? [])) {
+      genresName.add(element.name ?? '');
+    }
+    return genresName.join(' , ');
   }
 }
 
